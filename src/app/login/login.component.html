@@ -1,0 +1,80 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-10">
+            <h2>Admin Login</h2>
+            <div class="login">
+                <form class="login" [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+                    <div class="form-group ">
+                        <label class="control-label " for="email">
+                            Email
+                        </label>
+                        <div class="list-group">
+                                <i class="fa fa-envelope-square" aria-hidden="true"></i>
+                            <input class="form-control" formControlName="email" placeholder="Email" id="email" name="email"
+                                type="text" />
+                            </div>
+                    <div *ngIf="!loginForm.get('email').value && loginForm.get('email').touched">Email is Required</div>
+            </div>
+
+             <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" formControlName="password" placeholder="Password " class="form-control" />
+                <div *ngIf="!loginForm.get('password').value && loginForm.get('password').touched">Password is Required</div>
+            </div>
+            <div class="form-group">
+                <button [disabled]="!loginForm.valid" class="btn btn-success" (click)="authentication(email,password)">Login</button>&nbsp;
+                <button type="button" class="btn btn-info" (click)="openModal(signup)">Sign Up</button>
+            </div>
+            <p *ngIf="dataSaved" style="font-size:20px;font-weight:bold">
+                {{message}}
+            </p>
+
+
+            <ng-template #signup>
+                <div class="modal-header">
+                    <h4 class="modal-title pull-left">Register</h4>
+                    <button type="button" class="close pull-right" aria-label="Close" (click)="modalRef.hide()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form [formGroup]="signForm" (ngSubmit)="onFormSubmit(signForm.value)" class="form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" formControlName="name" placeholder="Name " class="form-control" />
+                        <div class="one" *ngIf="!signForm.get('name').value && signForm.get('name').touched">Name is
+                            required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <input type="text" formControlName="address" placeholder="Address " class="form-control" />
+                        <div *ngIf="!signForm.get('address').value && signForm.get('address').touched">Address is
+                            Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary</label>
+                        <input type="text" formControlName="salary" placeholder="Salary" class="form-control"
+                            placeholder="Salary">
+                        <div *ngIf="!signForm.get('salary').value && signForm.get('salary').touched">Salary is Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" formControlName="email" placeholder="Email " class="form-control" />
+                        <div *ngIf="!signForm.get('email').value && signForm.get('email').touched">Email is Required</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" formControlName="password" placeholder="Password" class="form-control" />
+                        <div *ngIf="!signForm.get('password').value && signForm.get('password').touched">Password is
+                            Required</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" [disabled]="!signForm.valid" (click)="modalRef.hide()">Submit</button>&nbsp;
+                        <button type="reset" class="btn btn-danger">Reset</button>
+                    </div>
+                </form>
+            </ng-template>
+            </form>
+        </div>
+    </div>
+</div>
+</div>

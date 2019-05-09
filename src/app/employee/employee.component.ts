@@ -15,7 +15,7 @@ export class EmployeeComponent implements OnInit {
   employeeForm: any;
   allEmployees: Observable<Employee[]>;
   employeeIdUpdate = null;
-  massage = null;
+  message = null;
   UpdateButtonShow = false;
   employeeModel : any;
 
@@ -33,6 +33,7 @@ export class EmployeeComponent implements OnInit {
       Email: ['', [Validators.required]],
       Address: ['', [Validators.required]],
       Salary: ['', [Validators.required]],
+      Password:['',[Validators.required]]
     });
     this.loadAllEmployees();
   }
@@ -48,13 +49,14 @@ export class EmployeeComponent implements OnInit {
   loadEmployeeToEdit(id: number) {
     this.UpdateButtonShow = true;
     this.employeeService.getAllEmployeeById(id).subscribe(employee => {
-      this.massage = null;
+      this.message = null;
       this.dataSaved = false;
       this.employeeIdUpdate = employee;
       this.employeeForm.controls['Name'].setValue(employee.Name);
       this.employeeForm.controls['Email'].setValue(employee.Email);
       this.employeeForm.controls['Address'].setValue(employee.Address);
       this.employeeForm.controls['Salary'].setValue(employee.Salary);
+      this.employeeForm.controls['Password'].setValue(employee.Password);
     });
 
   }
@@ -63,7 +65,7 @@ export class EmployeeComponent implements OnInit {
       this.employeeService.createEmployee(employee).subscribe(
         () => {
           this.dataSaved = true;
-          this.massage = 'Record saved Successfully';
+          this.message = 'Record saved Successfully';
           this.loadAllEmployees();
           this.employeeIdUpdate = null;
           this.employeeForm.reset();
@@ -79,21 +81,23 @@ export class EmployeeComponent implements OnInit {
       Address : this.employeeForm.controls['Address'].value,
       Salary : this.employeeForm.controls['Salary'].value,
     }
+    if(confirm("Update successfully")){
       this.employeeService.updateEmployee(this.employeeModel).subscribe(() => {
         this.dataSaved = true;
-        this.massage = 'Record Updated Successfully';
+        this.message = 'Record Updated Successfully';
         this.loadAllEmployees();
         this.employeeIdUpdate = null;
         this.employeeForm.reset();
         this.UpdateButtonShow = false;
       }); 
+    }
   }
 
   delete(id: number) {
     if (confirm("Are you sure you want to delete this ?")) {
       this.employeeService.delete(id).subscribe(() => {
         this.dataSaved = true;
-        this.massage = 'Record Deleted Succefully';
+        this.message = 'Record Deleted Succefully';
         this.loadAllEmployees();
         this.employeeIdUpdate = null;
         this.employeeForm.reset();
@@ -102,7 +106,10 @@ export class EmployeeComponent implements OnInit {
   }
   resetForm() {
     this.employeeForm.reset();
-    this.massage = null;
+    this.message = null;
     this.dataSaved = false;
+  }
+  authentication() {
+
   }
 }  

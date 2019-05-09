@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';  
 import { HttpHeaders } from '@angular/common/http';  
-import { Observable, Observer } from 'rxjs';  
+import { Observable } from 'rxjs';  
 import { Employee } from './employee';
-import { Options } from 'selenium-webdriver/edge';
+import { environment } from '../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EmployeeService {
-url='http://localhost:64828//api/Employees';
+  url = environment.Url;
   constructor(private http: HttpClient) { }
   getAllEmployee(): Observable<Employee[]>{
     return this.http.get<Employee[]>(this.url);
@@ -29,4 +29,8 @@ url='http://localhost:64828//api/Employees';
     const Options = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };  
     return this.http.delete<number>(this.url + '/' + id, Options);  
   }  
+  // authentication(email: string, password: string): Observable<Employee> {
+  //   const Options = { headers: new HttpHeaders({ 'Content-Type': 'application/json'}) };
+  //   return this.http.authentication<Employee>(this.url +'/Authentication' + email +password, Options );
+  // }
 }

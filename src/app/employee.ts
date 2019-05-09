@@ -4,4 +4,5 @@ export class Employee {
     Email:string;
     Address:string;
     Salary:string;
+    Password:string;
 }

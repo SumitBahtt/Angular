@@ -1,7 +1,8 @@
-<div>
-  <h5 class="head">Click here to add new Employee</h5>
-  <button type="button" class="btn btn-primary btn-lg" (click)="openModal(template)">Add Employee</button>
+<div class="container1">
+  <h5 class="head">Click here to add new Employee details</h5>
+  <button type="button" class="btn btn-primary btn-md" (click)="openModal(template)">Add Employee</button>
 </div>
+
 <ng-template #template>
 
   <form [formGroup]="employeeForm" class="form" (ngSubmit)="onFormSubmit(employeeForm.value)">
@@ -12,27 +13,35 @@
       </button>
     </div>
     <div class="group">
-      <label for="firstName">Name</label><br>
-      <input formControlName="Name" matInput placeholder="Name"><br>
-      <label for="firstName">Email</label><br>
+      <label for="Name">Name</label><br>
+      <input formControlName="Name" matInput placeholder="Name">
+      <mat-error>
+        <span *ngIf="!employeeForm.get('Name').value && employeeForm.get('Name').touched"></span>
+      </mat-error><br>
+      <label for="Email">Email</label><br>
       <input formControlName="Email" matTooltip="Enter EmailId" matInput placeholder="EmailId">
       <mat-error>
         <span *ngIf="!employeeForm.get('Email').value && employeeForm.get('Email').touched"></span>
       </mat-error><br>
-      <label for="firstName">Address</label><br>
+      <label for="Address">Address</label><br>
       <input matTooltip="Enter Address" formControlName="Address" matInput placeholder="Address">
       <mat-error>
         <span *ngIf="!employeeForm.get('Address').value && employeeForm.get('Address').touched"></span>
       </mat-error><br>
-      <label for="firstName">Salary</label><br>
+      <label for="Salary">Salary</label><br>
       <input formControlName="Salary" matTooltip="Enter Salary" matInput placeholder="Salary">
       <mat-error>
         <span *ngIf="!employeeForm.get('Salary').value && employeeForm.get('Salary').touched"></span>
+      </mat-error><br>
+      <label for="Password">Password</label><br>
+      <input type="password" formControlName="Password" matTooltip="Enter Password" matInput placeholder="Password">
+      <mat-error>
+        <span *ngIf="!employeeForm.get('Password').value && employeeForm.get('Password').touched"></span>
       </mat-error><br><br>
-      <button type="submit" class="btn btn-lg btn-info" mat-raised-button color="accent" *ngIf="!UpdateButtonShow"
-        matTooltip="Click Submit Button" [disabled]="!employeeForm.valid" (click)="modalRef.hide()">Submit</button>
+      <button type="submit" class="btn btn-lg btn-success" mat-raised-button color="accent" *ngIf="!UpdateButtonShow"
+        matTooltip="Click Submit Button" [disabled]="!employeeForm.valid" (click)="modalRef.hide()">Submit</button>&nbsp;
       <button type="button" class="btn btn-lg btn-info" mat-raised-button color="accent" *ngIf="UpdateButtonShow"
-        matTooltip="Click Update Button" (click)="updateEmployee(); modalRef.hide()" [disabled]="!employeeForm.valid">Update</button>
+        matTooltip="Click Update Button" (click)="updateEmployee(); modalRef.hide()" [disabled]="!employeeForm.valid">Update</button>&nbsp;
       <button type="reset" class="btn btn-lg btn-danger" mat-raised-button color="accent" matTooltip="Click Reset Button"
         (click)="resetForm()">Reset</button>
 
@@ -40,36 +49,36 @@
   </form>
 </ng-template>
 <p *ngIf="dataSaved" style="color:rgb(0, 128, 0);font-size:20px;font-weight:bold" Class="success">
-  {{massage}}
+  {{message}};
 </p>
 <div class="container">
-    <br><br><br>
-    <div>
-      <h1 class="heading">Employee DataBase Records</h1>
-    </div>
-    <br><br>
-    <table class="table" cellspacing="12px">
-      <tr ngclass="btn-primary">
-        <th class="tb12">S.No.</th>
-        <th class="tbl2">Employee Name</th>
-        <th class="tbl2">Email Id</th>
-        <th class="tbl2">Address</th>
-        <th class="tbl2">Salary</th>
-        <th class="tbl2">Update</th>
-        <th class="tbl2">Delete</th>
-      </tr>
-      <tr *ngFor="let employee of allEmployees | async; index as i">
-        <td class="tb12">{{i +1}}</td>
-        <td class="tbl2">{{employee.Name}}</td>
-        <td class="tbl2">{{employee.Email}}</td>
-        <td class="tbl2">{{employee.Address}}</td>
-        <td class="tbl2">{{employee.Salary}}</td>
-        <td class="tbl2">
-          <button type="button" class="btn btn-info" matTooltip="Click Edit Button" (click)="loadEmployeeToEdit(employee.Id); openModal(template)">Update</button>
-        </td>
-        <td class="tbl2">
-          <button type="button" class="btn btn-danger" matTooltip="Click Delete Button" (click)="delete(employee.Id)">Delete</button>
-        </td>
-      </tr>
-    </table>
+  <br><br><br>
+  <div>
+    <h1 class="heading">Employee DataBase Records</h1>
+  </div>
+  <br><br>
+  <table class="table" cellspacing="12px">
+    <tr ngclass="btn-primary">
+      <th class="tb12">S.No.</th>
+      <th class="tbl2">Employee Name</th>
+      <th class="tbl2">Email Id</th>
+      <th class="tbl2">Address</th>
+      <th class="tbl2">Salary</th>
+      <th class="tbl2">Update</th>
+      <th class="tbl2">Delete</th>
+    </tr>
+    <tr *ngFor="let employee of allEmployees | async; index as i">
+      <td class="tb12">{{i +1}}</td>
+      <td class="tbl2">{{employee.Name}}</td>
+      <td class="tbl2">{{employee.Email}}</td>
+      <td class="tbl2">{{employee.Address}}</td>
+      <td class="tbl2">{{employee.Salary}}</td>
+      <td class="tbl2">
+        <button type="button" class="btn btn-info" matTooltip="Click Edit Button" (click)="loadEmployeeToEdit(employee.Id); openModal(template)">Update</button>
+      </td>
+      <td class="tbl2">
+        <button type="button" class="btn btn-danger" matTooltip="Click Delete Button" (click)="delete(employee.Id)">Delete</button>
+      </td>
+    </tr>
+  </table>
 </div>
